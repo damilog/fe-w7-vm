@@ -1,0 +1,26 @@
+.progress-view {
+  text-align: center;
+  padding: 40px 20px;
+  width: 400px;
+  border: 5px solid black;
+  height: 700px;
+  &__price {
+    // width: 30px;
+    height: 60px;
+    border: 2px solid black;
+    margin-bottom: 60px;
+  }
+  &__btn {
+    // width: 30px;
+    padding: 0 155px;
+    height: 60px;
+    border: 2px solid black;
+    margin-bottom: 60px;
+    font-size: 20px;
+  }
+  &__state {
+    // width: 30px;
+    height: 300px;
+    border: 2px solid black;
+  }
+}
