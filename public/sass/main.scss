@@ -1,5 +1,7 @@
 @import "./progress.scss";
 @import "./wallet.scss";
+@import "./product.scss";
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +16,3 @@ ul,
 ol {
   list-style: none;
 }
-
-// .progress-view {
-//   background-color: rebeccapurple;
-// }
