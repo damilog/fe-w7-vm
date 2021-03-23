@@ -1,13 +1,14 @@
+import { _, data } from "../util.js";
+
 export default class WalletView {
-  constructor($walletViewCoin) {
-    this.$walletViewCoin = $walletViewCoin;
+  constructor() {
+    this.init();
   }
 
-  updateMoney(event) {
-    console.log(event.target);
+  drawCurrentWallet(event) {
+    const currentMoney = event.target.value;
+    this.stateView.drawUpdateTotalCoin(currentMoney);
   }
 
-  init() {
-    this.$walletViewCoin.addEventListener("click", this.updateMoney.bind(this));
-  }
+  init() {}
 }

@@ -1,13 +1,14 @@
 const path = require("path");
-const webpack = require("webpack");
+
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   mode: "development",
-  entry: ["./public/src/main.js", "./public/sass/main.scss"],
+  entry: ["@babel/polyfill", "./public/src/main.js"],
   //entry: ["babel-pollyfill", "./public/src/main.js"],
   devtool: "inline-source-map",
   output: {
-    filename: "bundle.js",
+    filename: "[name].[hash].js",
     path: path.resolve(__dirname, "dist"),
     publicPath: "http://localhost:3000",
   },
@@ -21,7 +22,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ["style-loader", "css-loader", "sass-loader"],
-        exclude: /node_modules/,
+        // exclude: /node_modules/,
       },
     ],
   },
@@ -29,12 +30,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
+    new CleanWebpackPlugin(),
   ],
   devServer: {
     contentBase: path.resolve(__dirname + "/dist"),
     index: "index.html",
     port: 3000,
     writeToDisk: true,
-    hot: true, // 저장하면 바로 설정되는? 아마두.. -> 코드 짜고 저장하면 새로고침 안해도 반영됨
+    hot: true,
   },
 };
