@@ -5,7 +5,6 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: ["@babel/polyfill", "./public/src/main.js"],
-  //entry: ["babel-pollyfill", "./public/src/main.js"],
   devtool: "inline-source-map",
   output: {
     filename: "[name].[hash].js",
@@ -22,7 +21,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ["style-loader", "css-loader", "sass-loader"],
-        // exclude: /node_modules/,
+        exclude: /node_modules/,
       },
     ],
   },
