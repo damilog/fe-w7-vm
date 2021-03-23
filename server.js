@@ -5,6 +5,10 @@ const webpack = require("webpack");
 const webpackConfig = require("./webpack.config");
 const compiler = webpack(webpackConfig);
 
+app.get("/", function (req, res, next) {
+  next();
+  // res.sendFile(__dirname + "/public/index.html");
+});
 app.use(
   webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
@@ -12,9 +16,6 @@ app.use(
   })
 );
 
-app.use(express.static("public"));
-app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/public/index.html");
-});
+app.use(express.static(__dirname));
 
 app.listen(3000);
