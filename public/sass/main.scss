@@ -1,4 +1,6 @@
 @import "./product.scss";
+@import "./progress.scss";
+@import "./wallet.scss";
 
 * {
   margin: 0;
@@ -13,4 +15,8 @@ body {
 ul,
 ol {
   list-style: none;
+}
+main {
+  display: flex;
+  margin: 50px 100px;
 }
