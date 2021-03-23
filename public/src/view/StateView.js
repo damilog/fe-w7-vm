@@ -1,4 +1,4 @@
-import { _, data } from "../util.js";
+import { _ } from "../util.js";
 
 export default class StateView {
   constructor() {

@@ -1,4 +1,6 @@
-import { _, data } from "../util.js";
+import { _ } from "../util.js";
+import { data } from "../data.js";
+
 export default class HTMLRenderManager {
   constructor() {
     this.init();
