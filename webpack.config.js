@@ -1,7 +1,7 @@
 const path = require("path");
-
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
 module.exports = {
   mode: "development",
   entry: ["@babel/polyfill", "./public/src/main.js"],

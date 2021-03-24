@@ -5,7 +5,9 @@ const _ = {
     const el = _.$(`${selector}`);
     el.remove();
   },
+
   on: (el, type, cb) => el?.addEventListener(type, cb),
+  insert: (el, position, text) => el?.insertAdjacentHTML(position, text),
   add: (el, className) => el?.classList.add(className),
   remove: (el, className) => el?.classList.remove(className),
   toggle: (el, className) => el?.classList.toggle(className),
