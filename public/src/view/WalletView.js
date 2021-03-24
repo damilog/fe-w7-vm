@@ -1,9 +1,12 @@
 import { _ } from "../util.js";
 import { data } from "../data.js";
-
+import MonitorView from "./MonitorView.js"; //wallet click 구독
+import MachineModel from "../Model/MachineModel.js"; //wallet click 구독
 export default class WalletView {
   constructor(model) {
     this.model = model;
+    this.monitorView = new MonitorView(); //wallet click 구독
+    this.machineModel = new MachineModel(); //wallet click 구독
     this.renderInitView();
     this.$wallet = _.$(".wallet-view__cash-bundle");
     this.init();
@@ -41,8 +44,25 @@ export default class WalletView {
   updateWallet(event) {
     if (event.target.className !== "wallet-view__cash-bundle__price") return;
     const clickedMoney = Number(event.target.value);
-    this.model.updateMoney(clickedMoney);
-    this.drawCurrentWallet(clickedMoney);
+    this.model.updateMoney(clickedMoney); //wallet click 구독
+    this.drawCurrentWallet(clickedMoney); //wallet click 구독
+    this.drawTotalPrice();
+
+    const template = this.monitorView.printInputMoney(clickedMoney); //wallet click 구독
+    this.monitorView.updateMonitor(template); //wallet click 구독
+
+    this.machineModel.updateTotalMoney(clickedMoney); //wallet click 구독
+    // this.monitorView.renderInputMoney();
+    //---------this.monitorView.renderInputMoney()와 동일⬇️-------------------------
+    const totalInputMoney = this.machineModel.getTotalInputMoney();
+    const $inputMoney = _.$(".monitor-view__money");
+    console.log(this.machineModel.getTotalInputMoney());
+    $inputMoney.innerText = `${totalInputMoney} 원`;
+    //----------------------------------------------------------
+  }
+  drawTotalPrice() {
+    const cashTotalPrice = _.$(".wallet-view__cash-bundle__total-price");
+    cashTotalPrice.innerText = this.model.calculateTotalMoney();
   }
 
   drawCurrentWallet(clickedMoney) {

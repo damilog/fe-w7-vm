@@ -1,13 +1,16 @@
 import { _ } from "../util.js";
 
 export default class MonitorView {
-  constructor() {
+  constructor(model) {
+    this.model = model;
     this.init();
   }
 
-  updateInputMoney(money) {
+  renderInputMoney() {
+    const totalInputMoney = this.model.getTotalInputMoney();
+    console.log(totalInputMoney);
     const $inputMoney = _.$(".monitor-view__money");
-    $inputMoney.textContent = `${money} 원`;
+    $inputMoney.innerText = `${totalInputMoney} 원`;
   }
 
   disableReturnBtn() {
@@ -28,9 +31,11 @@ export default class MonitorView {
   printInputMoney(money) {
     return `<div class= "monitor-view__monitor__text">${money}원이 투입됐음.</div>`;
   }
+
   printSelectedProduct(product) {
     return `<div class= "monitor-view__monitor__text">${product}가 선택 됨.</div>`;
   }
+
   printReturnMoney(money) {
     return `<div class= "monitor-view__monitor__text">잔돈 ${money}원 반환</div>`;
   }
@@ -50,8 +55,5 @@ export default class MonitorView {
 
   init() {
     this.renderInitView();
-    this.updateMonitor(this.printInputMoney(500));
-    this.updateMonitor(this.printInputMoney(500));
-    this.updateInputMoney(33);
   }
 }
