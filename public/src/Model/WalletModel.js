@@ -13,7 +13,6 @@ export default class WalletModel extends Observable {
     this.moneyState.forEach(money => {
       if (money["name"] === moneyType && money["count"]) money["count"]--;
     });
-    console.log(this.moneyState);
   }
 
   getMoneyState() {
@@ -22,9 +21,12 @@ export default class WalletModel extends Observable {
 
   // 500
   getMoneyCount(moneyType) {
-    return this.moneyState.forEach(money => {
-      if (money["name"] === moneyType && money["count"]) return money["count"];
+    let count;
+
+    this.moneyState.forEach(money => {
+      if (money["name"] === moneyType && money["count"]) count = money["count"];
     });
+    return count;
   }
 
   calculateTotalMoney() {

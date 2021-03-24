@@ -38,17 +38,21 @@ export default class WalletView {
     }, "");
   }
 
-  drawCurrentWallet(event) {
+  updateWallet(event) {
     if (event.target.className !== "wallet-view__cash-bundle__price") return;
-    const clickedMoney = event.target.value;
-    this.model.updateMoney(clickedMoney); //상태 변경
-    const clickedMoneyCount = _.$(`#cnt-${event.target.value}`);
-    clickedMoneyCount.innerText = this.model.getMoneyCount(clickedMoney);
+    const clickedMoney = Number(event.target.value);
+    this.model.updateMoney(clickedMoney);
+    this.drawCurrentWallet(clickedMoney);
   }
-  findSelectedMoney() {}
+
+  drawCurrentWallet(clickedMoney) {
+    const $clickedMoneyCount = _.$(`#cnt-${clickedMoney}`);
+    const clickedMoneyCount = this.model.getMoneyCount(clickedMoney);
+    $clickedMoneyCount.innerText = `${clickedMoneyCount}개`;
+  }
 
   onEvent() {
     //버튼만 클릭되게 수정
-    this.$wallet.addEventListener("click", this.drawCurrentWallet.bind(this));
+    this.$wallet.addEventListener("click", this.updateWallet.bind(this));
   }
 }
