@@ -9,7 +9,7 @@
 
     padding: 50px 30px;
     background-color: ec4037;
-    font-size: 15px;
+    font-size: 20px;
     border-radius: 10px;
     &__list {
       margin: 10px;
@@ -19,6 +19,7 @@
         background-color: white;
         height: 100px;
         display: block;
+        padding: 35px 0px;
       }
       &__price {
         background: black;
@@ -30,4 +31,8 @@
       }
     }
   }
+}
+
+.selectable {
+  background-color: rgb(147, 206, 255);
 }
