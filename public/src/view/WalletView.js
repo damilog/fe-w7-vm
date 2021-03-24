@@ -3,22 +3,24 @@ import { data } from "../data.js";
 
 export default class WalletView {
   constructor(model) {
-    this.init();
     this.model = model;
+    this.renderInitView();
     this.$wallet = _.$(".wallet-view__cash-bundle");
+    this.init();
   }
   init() {
-    this.renderWalletView();
-    //this.onEvent();
+    this.onEvent();
   }
 
-  renderWalletView() {
+  renderInitView() {
     const $walletContainer = _.$(".wallet-view");
-    const innerTemplate = this.makeWalletViewTemplate(data["money"]);
-    const template = `<ul class="wallet-view__cash-bundle">${innerTemplate}</ul><div class="wallet-view__cash-bundle__total-price">23550</div>`;
+    const innerTemplate = this.makeTemplate(data["money"]);
+    const totalMoney = this.model.calculateTotalMoney(); //총합을 가져옴
+    const template = `<ul class="wallet-view__cash-bundle">${innerTemplate}</ul><div class="wallet-view__cash-bundle__total-price">${totalMoney}</div>`;
     $walletContainer.innerHTML = template;
   }
-  makeWalletViewTemplate(moneyList) {
+
+  makeTemplate(moneyList) {
     const money = moneyList;
     return money.reduce((acc, money) => {
       return (
@@ -28,8 +30,9 @@ export default class WalletView {
         type="button"
         value="${money["name"]}"
         class="wallet-view__cash-bundle__price"
+        id="money-${money["name"]}"
       />
-      <div class="wallet-view__cash-bundle__cnt">${money["count"]}개</div>
+      <div class="wallet-view__cash-bundle__cnt" id="cnt-${money["name"]}">${money["count"]}개</div>
     </li>`
       );
     }, "");
@@ -38,10 +41,11 @@ export default class WalletView {
   drawCurrentWallet(event) {
     if (event.target.className !== "wallet-view__cash-bundle__price") return;
     const clickedMoney = event.target.value;
-    this.model.updateMoney(clickedMoney);
-
-    const totalMoney = this.model.calculateTotalMoney();
+    this.model.updateMoney(clickedMoney); //상태 변경
+    const clickedMoneyCount = _.$(`#cnt-${event.target.value}`);
+    clickedMoneyCount.innerText = this.model.getMoneyCount(clickedMoney);
   }
+  findSelectedMoney() {}
 
   onEvent() {
     //버튼만 클릭되게 수정
