@@ -35,16 +35,17 @@ export default class MachineModel extends Observable {
     console.log(this.productState);
   }
 
+  updateMachineState(state) {
+    this.notify(state);
+  }
+
   setOverBudgetError() {
     const state = { action: "overBudget", data: this.totalInputMoney };
     this.updateMachineState(state);
   }
 
-  updateCurrentProduct(product) {
-    this.currentProduct = product;
-
+  updateSelectedProduct(product) {
     const state = { action: "select", data: product };
-
     this.updateMachineState(state);
   }
 
@@ -58,9 +59,6 @@ export default class MachineModel extends Observable {
     const state = { action: "input", data: moneyType };
 
     this.updateMachineState(state);
-  }
-  updateMachineState(state) {
-    this.notify(state);
   }
 
   getTotalInputMoney() {

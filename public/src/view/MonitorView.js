@@ -46,10 +46,12 @@ export default class MonitorView {
         text = this.printSelectedProduct(data);
         break;
       case "return":
+        this.renderInputMoney();
         text = this.printReturnMoney(data);
         break;
       case "overBudget":
-        test = this.printOverBudgetError(data);
+        this.renderInputMoney();
+        text = this.printOverBudgetError(data);
         break;
       default:
         console.log(Error(`${action}은 처리 불가합니다.`));
