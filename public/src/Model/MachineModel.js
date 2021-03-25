@@ -32,7 +32,6 @@ export default class MachineModel extends Observable {
     this.productState.forEach(x => {
       if (product === x["name"]) x["stock"]--;
     });
-    console.log(this.productState);
   }
 
   updateMachineState(state) {
@@ -52,7 +51,6 @@ export default class MachineModel extends Observable {
 
   reduceTotalMoney(moneyType) {
     this.totalInputMoney -= moneyType;
-    console.log(this.totalInputMoney);
   }
 
   addTotalMoney(moneyType) {

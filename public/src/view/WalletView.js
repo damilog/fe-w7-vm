@@ -12,8 +12,6 @@ export default class WalletView {
   init() {
     this.onEvent();
     this.model.subscribe(this.renderCurrentWallet.bind(this));
-
-    // ✅잔여 동전 없으면 클릭 못 하도록 수정 필요
   }
 
   onEvent() {
