@@ -11,6 +11,7 @@ const _ = {
   add: (el, className) => el?.classList.add(className),
   remove: (el, className) => el?.classList.remove(className),
   toggle: (el, className) => el?.classList.toggle(className),
+  replace: (el, oldName, newName) => el?.classList.replace(oldName, newName),
   contains: (el, className) => el?.classList.contains(className),
 };
 

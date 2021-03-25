@@ -1,18 +1,19 @@
 import { _ } from "../util.js";
 
 export default class MonitorView {
-  constructor(model, productView) {
+  constructor(model, walletModel) {
     this.model = model;
-    this.productView = productView;
+    this.walletModel = walletModel;
     this.renderInitView();
     this.init();
   }
 
   init() {
-    this.model.subscribe(this.renderMonitor.bind(this));
-    this.model.subscribe(
-      this.productView.paintSelectable.bind(this.productView)
-    );
+    this.walletModel.subscribe(this.updateInputEvent.bind(this));
+    this.model.subscribe(this.renderMonitor.bind(this)); //전달 받은 상태에 맞는 문구를 모니터에 보여줌
+    // this.model.subscribe(
+    //   this.productView.paintSelectable.bind(this.productView)
+    // ); //선택할 수 있는 상품을 색칠함
   }
 
   updateInputEvent(money) {
@@ -43,10 +44,13 @@ export default class MonitorView {
         text = this.printInputMoney(data);
         break;
       case "select":
-        text = this.printSelectedMoney(data);
+        text = this.printSelectedProduct(data);
         break;
       case "return":
         text = this.printReturnMoney(data);
+        break;
+      case "overBudget":
+        test = this.printOverBudgetError(data);
         break;
       default:
         console.log(Error(`${action}은 처리 불가합니다.`));
@@ -54,6 +58,10 @@ export default class MonitorView {
 
     const $monitor = _.$(".monitor-view__monitor");
     _.insert($monitor, "beforeend", text);
+  }
+
+  printOverBudgetError(money) {
+    return `<div class= "monitor-view__monitor__text">현재 투입 금액(${money})로 구매 불가</div>`;
   }
 
   printInputMoney(money) {

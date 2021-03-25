@@ -1,9 +1,9 @@
 import { _ } from "../util.js";
 
 export default class WalletView {
-  constructor(model, monitorView) {
+  constructor(model, machineModel) {
     this.model = model;
-    this.monitorView = monitorView; //?? 말도 안되는 상황
+    this.machineModel = machineModel;
     this.renderInitView();
     this.$wallet = _.$(".wallet-view__cash-bundle");
     this.init();
@@ -11,9 +11,7 @@ export default class WalletView {
   init() {
     this.onEvent();
     this.model.subscribe(this.renderCurrentWallet.bind(this));
-    this.model.subscribe(
-      this.monitorView.updateInputEvent.bind(this.monitorView)
-    );
+
     // ✅잔여 동전 없으면 클릭 못 하도록 수정 필요
   }
 

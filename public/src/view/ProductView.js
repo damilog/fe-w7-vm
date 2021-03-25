@@ -2,9 +2,19 @@ import { _ } from "../util.js";
 import { data } from "../data.js";
 
 export default class ProductView {
-  constructor(model) {
+  constructor(model, walletModel) {
     this.model = model;
+    this.walletModel = walletModel;
     this.init();
+  }
+
+  init() {
+    this.renderInitView();
+    _.$(".product-view__drink-bundle").addEventListener(
+      "click",
+      this.updateProduct.bind(this)
+    );
+    this.model.subscribe(this.paintSelectable.bind(this));
   }
 
   renderInitView() {
@@ -22,6 +32,14 @@ export default class ProductView {
     });
   }
 
+  paintUnselectable(product) {
+    const $products = _.$All(".product-view__drink-bundle__list__name");
+    $products.forEach(x => {
+      if (product.includes(x.innerText))
+        _.replace(x, "selectable", "unseletable");
+    });
+  }
+
   makeProductViewTemplate(productList) {
     const product = productList;
     return product.reduce((acc, product) => {
@@ -34,21 +52,33 @@ export default class ProductView {
       );
     }, "");
   }
+
+  checkCurrentStock(clickedProduct) {
+    if (this.model.isInStock(clickedProduct)) {
+      //재고가 있는지? + (total 금액도 확인해야돼)
+      this.model.updateCurrentProduct(clickedProduct); // 기존 구독 리스트 제거하고 이걸 구독해야될 것 같음.
+      this.model.updateStock(clickedProduct); // 기존 구독 리스트 제거하고 이걸 구독해야될 것 같음.
+    } else {
+      alert(`${clickedProduct}는 품절된 상품입니다.`);
+    }
+  }
+
+  checkCurrentTotalMoney(money) {
+    const currentTotalMoney = this.model.getTotalInputMoney();
+    if (currentTotalMoney < money) {
+      this.model.setOverBudgetError();
+    } else {
+    }
+  }
+
   updateProduct(event) {
-    //console.log(event.target.className);
     if (
       event.target.className !==
       "product-view__drink-bundle__list__name selectable"
     )
       return;
-    const clickedProduct = event.target.innerText;
-  }
 
-  init() {
-    this.renderInitView();
-    _.$(".product-view__drink-bundle").addEventListener(
-      "click",
-      this.updateProduct.bind(this)
-    );
+    const clickedProduct = event.target.innerText;
+    this.checkCurrentStock(clickedProduct);
   }
 }
