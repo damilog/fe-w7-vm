@@ -1,8 +1,7 @@
 import { _ } from "../util.js";
-import MachineModel from "../model/MachineModel.js";
 export default class MonitorView {
   constructor(model) {
-    this.model = new MachineModel();
+    this.model = model;
     this.renderInitView();
     this.init();
   }

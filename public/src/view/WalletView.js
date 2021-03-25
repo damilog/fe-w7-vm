@@ -1,10 +1,9 @@
 import { _ } from "../util.js";
-import MonitorView from "./MonitorView.js";
 
 export default class WalletView {
-  constructor(model, progressView) {
+  constructor(model, monitorView) {
     this.model = model;
-    this.monitorView = new MonitorView(); //?? 말도 안되는 상황 progressview가 아님 ..
+    this.monitorView = monitorView; //?? 말도 안되는 상황
     this.renderInitView();
     this.$wallet = _.$(".wallet-view__cash-bundle");
     this.init();
