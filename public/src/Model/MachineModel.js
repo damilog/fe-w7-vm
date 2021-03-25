@@ -44,8 +44,9 @@ export default class MachineModel extends Observable {
     this.updateMachineState(state);
   }
 
-  updateSelectedProduct(product) {
+  async updateSelectedProduct(product) {
     const state = { action: "select", data: product };
+    await _.delay(2000);
     this.updateMachineState(state);
   }
 
@@ -71,5 +72,13 @@ export default class MachineModel extends Observable {
       if (product === x["name"]) price = x["price"];
     });
     return price;
+  }
+
+  getProductStock(product) {
+    let stock;
+    this.productState.forEach(x => {
+      if (product === x["name"]) stock = x["stock"];
+    });
+    return stock;
   }
 }

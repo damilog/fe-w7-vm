@@ -66,11 +66,12 @@ export default class MonitorView {
   }
 
   printInputMoney(money) {
-    return `<div class= "monitor-view__monitor__text">${money}원이 투입됐음.</div>`;
+    return `<div class= "monitor-view__monitor__text">${money}원이 투입 됨</div>`;
   }
 
   printSelectedProduct(product) {
-    return `<div class= "monitor-view__monitor__text">${product}가 선택 됨.</div>`;
+    const stock = this.model.getProductStock(product);
+    return `<div class= "monitor-view__monitor__text">${product}가 선택 됨 (재고 ${stock}개)</div>`;
   }
 
   printReturnMoney(money) {

@@ -1,5 +1,5 @@
 import "../sass/main.scss";
-import { _, delay } from "./util.js";
+import { _ } from "./util.js";
 import WalletModel from "./model/WalletModel.js";
 import MachineModel from "./model/MachineModel.js";
 
