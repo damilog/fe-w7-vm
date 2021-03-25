@@ -1,18 +1,25 @@
 import { _ } from "../util.js";
 import { data } from "../data.js";
+
 export default class ProductView {
   constructor(model) {
     this.init();
+    this.model = model;
   }
 
-  renderProductView() {
+  renderInitView() {
     const $productContainer = _.$(".product-view");
     const innerTemplate = this.makeProductViewTemplate(data["product"]);
     const template = `<ul class="product-view__drink-bundle">${innerTemplate}</ul>`;
     $productContainer.innerHTML = template;
   }
-  paintSelectable(product) {
-    _.add(product, ".selectable");
+
+  paintSelectable() {
+    const selectableProductList = this.model.getSelectableProduct();
+    const $products = _.$All(".product-view__drink-bundle__list__name");
+    $products.forEach(x => {
+      if (selectableProductList.includes(x.innerText)) _.add(x, "selectable");
+    });
   }
 
   makeProductViewTemplate(productList) {
@@ -29,6 +36,6 @@ export default class ProductView {
   }
 
   init() {
-    this.renderProductView();
+    this.renderInitView();
   }
 }

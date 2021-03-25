@@ -11,5 +11,5 @@ const walletModel = new WalletModel();
 const machineModel = new MachineModel();
 
 const productView = new ProductView(machineModel);
-const monitorView = new MonitorView(machineModel);
+const monitorView = new MonitorView(machineModel, productView);
 const walletView = new WalletView(walletModel, monitorView);

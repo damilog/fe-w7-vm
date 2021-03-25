@@ -1,17 +1,22 @@
 import { _ } from "../util.js";
+
 export default class MonitorView {
-  constructor(model) {
+  constructor(model, productView) {
     this.model = model;
+    this.productView = productView;
     this.renderInitView();
     this.init();
   }
 
   init() {
     this.model.subscribe(this.renderMonitor.bind(this));
+    this.model.subscribe(
+      this.productView.paintSelectable.bind(this.productView)
+    );
   }
 
   updateInputEvent(money) {
-    this.model.updateTotalMoney(money); //notify함
+    this.model.updateTotalMoney(money); //notify
     this.renderInputMoney();
   }
 
@@ -32,7 +37,6 @@ export default class MonitorView {
   }
 
   renderMonitor({ action, data }) {
-    // const state = { action : "input", data : 4500} ->이런식으로 전달 받아야함
     let text;
     switch (action) {
       case "input":

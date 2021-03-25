@@ -1,15 +1,27 @@
 import { _ } from "../util.js";
 import Observable from "../Observable.js";
+import { data } from "../data.js";
 
 export default class MachineModel extends Observable {
   constructor() {
     super();
     this.totalInputMoney = 0;
-    this.init();
+    this.productState = data["product"];
+  }
+
+  getSelectableProduct() {
+    const selectableProduct = [];
+    this.productState.forEach(product => {
+      if (product["price"] <= this.totalInputMoney)
+        selectableProduct.push(product["name"]);
+    });
+
+    return selectableProduct;
   }
 
   updateMachineState(state) {
     this.notify(state);
+    //this.getSelectableProduct();
   }
 
   updateTotalMoney(moneyType) {
@@ -21,5 +33,4 @@ export default class MachineModel extends Observable {
   getTotalInputMoney() {
     return this.totalInputMoney;
   }
-  init() {}
 }
