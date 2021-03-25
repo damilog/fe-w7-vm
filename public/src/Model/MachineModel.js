@@ -35,7 +35,7 @@ export default class MachineModel extends Observable {
     console.log(this.productState);
   }
 
-  getOverBudgetError() {
+  setOverBudgetError() {
     const state = { action: "overBudget", data: this.totalInputMoney };
     this.updateMachineState(state);
   }

@@ -9,11 +9,9 @@ export default class MonitorView {
   }
 
   init() {
-    this.walletModel.subscribe(this.updateInputEvent.bind(this));
-    this.model.subscribe(this.renderMonitor.bind(this)); //전달 받은 상태에 맞는 문구를 모니터에 보여줌
-    // this.model.subscribe(
-    //   this.productView.paintSelectable.bind(this.productView)
-    // ); //선택할 수 있는 상품을 색칠함
+    this.walletModel.subscribe(money => this.updateInputEvent(money));
+    this.walletModel.subscribe(this.ableReturnBtn.bind(this));
+    this.model.subscribe(state => this.renderMonitor(state));
   }
 
   updateInputEvent(money) {

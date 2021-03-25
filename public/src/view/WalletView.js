@@ -8,11 +8,16 @@ export default class WalletView {
     this.$wallet = _.$(".wallet-view__cash-bundle");
     this.init();
   }
+
   init() {
     this.onEvent();
     this.model.subscribe(this.renderCurrentWallet.bind(this));
 
     // ✅잔여 동전 없으면 클릭 못 하도록 수정 필요
+  }
+
+  onEvent() {
+    this.$wallet.addEventListener("click", this.updateWallet.bind(this));
   }
 
   renderInitView() {
@@ -57,10 +62,5 @@ export default class WalletView {
     const clickedMoneyCount = this.model.getMoneyCount(clickedMoney);
     $clickedMoneyCount.innerText = `${clickedMoneyCount}개`;
     this.renderTotalPrice();
-  }
-
-  onEvent() {
-    //버튼만 클릭되게 수정
-    this.$wallet.addEventListener("click", this.updateWallet.bind(this));
   }
 }

@@ -10,11 +10,14 @@ export default class ProductView {
 
   init() {
     this.renderInitView();
+    this.onEvent();
+    this.model.subscribe(this.paintSelectable.bind(this));
+  }
+  onEvent() {
     _.$(".product-view__drink-bundle").addEventListener(
       "click",
       this.updateProduct.bind(this)
     );
-    this.model.subscribe(this.paintSelectable.bind(this));
   }
 
   renderInitView() {
