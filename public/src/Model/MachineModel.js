@@ -18,6 +18,11 @@ export default class MachineModel extends Observable {
 
     return selectableProduct;
   }
+  updateStock(product) {
+    this.productState.forEach(x => {
+      if (product === x["name"]) x["stock"]--;
+    });
+  }
 
   updateMachineState(state) {
     this.notify(state);

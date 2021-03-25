@@ -3,8 +3,8 @@ import { data } from "../data.js";
 
 export default class ProductView {
   constructor(model) {
-    this.init();
     this.model = model;
+    this.init();
   }
 
   renderInitView() {
@@ -34,8 +34,21 @@ export default class ProductView {
       );
     }, "");
   }
+  updateProduct(event) {
+    //console.log(event.target.className);
+    if (
+      event.target.className !==
+      "product-view__drink-bundle__list__name selectable"
+    )
+      return;
+    const clickedProduct = event.target.innerText;
+  }
 
   init() {
     this.renderInitView();
+    _.$(".product-view__drink-bundle").addEventListener(
+      "click",
+      this.updateProduct.bind(this)
+    );
   }
 }
