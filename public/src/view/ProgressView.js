@@ -1,8 +1,9 @@
 import { _ } from "../util.js";
 import MachineModel from "../model/MachineModel.js";
-export default class MonitorView {
+
+export default class ProgressView {
   constructor(model) {
-    this.model = new MachineModel();
+    this.model = model;
     this.renderInitView();
     this.init();
   }
@@ -11,8 +12,8 @@ export default class MonitorView {
     this.model.subscribe(this.renderMonitor.bind(this));
   }
 
-  updateInputEvent(money) {
-    this.model.updateTotalMoney(money); //notify함
+  addSubscribe(tt) {
+    this.model.updateTotalMoney(tt); //notify함
     this.renderInputMoney();
   }
 

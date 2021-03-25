@@ -6,22 +6,17 @@ export default class WalletModel extends Observable {
   constructor() {
     super();
     this.moneyState = data["money"];
-    this.totalInputMoney = 0;
-    this.init();
   }
 
   updateMoney(moneyType) {
-    this.totalInputMoney += moneyType;
     this.moneyState.forEach(money => {
       if (money["name"] === moneyType && money["count"]) money["count"]--;
     });
+    this.notify(moneyType);
   }
 
   getMoneyState() {
     return this.moneyState;
-  }
-  getTotalInputMoney() {
-    return this.totalInputMoney;
   }
 
   getMoneyCount(moneyType) {
@@ -40,6 +35,4 @@ export default class WalletModel extends Observable {
       return acc + money["name"] * money["count"];
     }, 0);
   }
-
-  init() {}
 }

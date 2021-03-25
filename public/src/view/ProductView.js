@@ -1,7 +1,7 @@
 import { _ } from "../util.js";
 import { data } from "../data.js";
 export default class ProductView {
-  constructor() {
+  constructor(model) {
     this.init();
   }
 
@@ -10,6 +10,9 @@ export default class ProductView {
     const innerTemplate = this.makeProductViewTemplate(data["product"]);
     const template = `<ul class="product-view__drink-bundle">${innerTemplate}</ul>`;
     $productContainer.innerHTML = template;
+  }
+  paintSelectable(product) {
+    _.add(product, ".selectable");
   }
 
   makeProductViewTemplate(productList) {

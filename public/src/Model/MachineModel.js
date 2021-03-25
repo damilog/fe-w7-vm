@@ -8,8 +8,14 @@ export default class MachineModel extends Observable {
     this.init();
   }
 
+  updateMachineState(state) {
+    this.notify(state);
+  }
+
   updateTotalMoney(moneyType) {
     this.totalInputMoney += moneyType;
+    const state = { action: "input", data: moneyType };
+    this.updateMachineState(state);
   }
 
   getTotalInputMoney() {
