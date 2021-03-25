@@ -28,7 +28,7 @@ export default class MachineModel extends Observable {
     return stock > 0;
   }
 
-  updateStock(product) {
+  reduceStock(product) {
     this.productState.forEach(x => {
       if (product === x["name"]) x["stock"]--;
     });

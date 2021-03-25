@@ -89,11 +89,11 @@ export default class ProductView {
     const currentTotalMoney = this.model.getTotalInputMoney();
 
     if (currentTotalMoney < clickedProductPrice) {
-      this.model.setOverBudgetError(); // 예산이 부족해요
+      this.model.setOverBudgetError(); // 예산이 부족한 경우
     } else {
-      this.model.updateSelectedProduct(clickedProduct);
-      this.model.updateStock(clickedProduct);
+      this.model.reduceStock(clickedProduct);
       this.model.reduceTotalMoney(clickedProductPrice);
+      this.model.updateSelectedProduct(clickedProduct);
     }
   }
 }
