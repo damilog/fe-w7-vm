@@ -15,8 +15,7 @@ export default class MonitorView {
   }
 
   updateInputEvent(money) {
-    this.model.updateTotalMoney(money); //notify
-    this.renderInputMoney();
+    this.model.addTotalMoney(money); //notify
   }
 
   renderInputMoney() {
@@ -39,9 +38,11 @@ export default class MonitorView {
     let text;
     switch (action) {
       case "input":
+        this.renderInputMoney();
         text = this.printInputMoney(data);
         break;
       case "select":
+        this.renderInputMoney();
         text = this.printSelectedProduct(data);
         break;
       case "return":

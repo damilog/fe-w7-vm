@@ -42,12 +42,18 @@ export default class MachineModel extends Observable {
 
   updateCurrentProduct(product) {
     this.currentProduct = product;
+
     const state = { action: "select", data: product };
 
     this.updateMachineState(state);
   }
 
-  updateTotalMoney(moneyType) {
+  reduceTotalMoney(moneyType) {
+    this.totalInputMoney -= moneyType;
+    console.log(this.totalInputMoney);
+  }
+
+  addTotalMoney(moneyType) {
     this.totalInputMoney += moneyType;
     const state = { action: "input", data: moneyType };
 
@@ -59,5 +65,13 @@ export default class MachineModel extends Observable {
 
   getTotalInputMoney() {
     return this.totalInputMoney;
+  }
+
+  getProductPrice(product) {
+    let price;
+    this.productState.forEach(x => {
+      if (product === x["name"]) price = x["price"];
+    });
+    return price;
   }
 }

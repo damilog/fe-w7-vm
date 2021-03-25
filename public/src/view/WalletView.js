@@ -24,7 +24,7 @@ export default class WalletView {
     const $walletContainer = _.$(".wallet-view");
     const moneyData = this.model.getMoneyState();
     const innerTemplate = this.makeTemplate(moneyData);
-    const totalMoney = this.model.calculateTotalMoney(); //총합을 가져옴
+    const totalMoney = this.model.calculateTotalMoney();
     const template = `<ul class="wallet-view__cash-bundle">${innerTemplate}</ul><div class="wallet-view__cash-bundle__total-price">${totalMoney}</div>`;
     $walletContainer.innerHTML = template;
   }

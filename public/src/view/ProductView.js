@@ -20,6 +20,20 @@ export default class ProductView {
     );
   }
 
+  updateProduct(event) {
+    if (
+      event.target.className !==
+      "product-view__drink-bundle__list__name selectable"
+    )
+      return;
+
+    const clickedProduct = event.target.innerText;
+    const clickedProductPrice = this.model.getProductPrice(clickedProduct);
+
+    this.model.reduceTotalMoney(clickedProductPrice);
+    this.checkCurrentStock(clickedProduct);
+  }
+
   renderInitView() {
     const $productContainer = _.$(".product-view");
     const innerTemplate = this.makeProductViewTemplate(data["product"]);
@@ -59,8 +73,8 @@ export default class ProductView {
   checkCurrentStock(clickedProduct) {
     if (this.model.isInStock(clickedProduct)) {
       //재고가 있는지? + (total 금액도 확인해야돼)
-      this.model.updateCurrentProduct(clickedProduct); // 기존 구독 리스트 제거하고 이걸 구독해야될 것 같음.
-      this.model.updateStock(clickedProduct); // 기존 구독 리스트 제거하고 이걸 구독해야될 것 같음.
+      this.model.updateCurrentProduct(clickedProduct);
+      this.model.updateStock(clickedProduct);
     } else {
       alert(`${clickedProduct}는 품절된 상품입니다.`);
     }
@@ -72,16 +86,5 @@ export default class ProductView {
       this.model.setOverBudgetError();
     } else {
     }
-  }
-
-  updateProduct(event) {
-    if (
-      event.target.className !==
-      "product-view__drink-bundle__list__name selectable"
-    )
-      return;
-
-    const clickedProduct = event.target.innerText;
-    this.checkCurrentStock(clickedProduct);
   }
 }
