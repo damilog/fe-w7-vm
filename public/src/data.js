@@ -22,7 +22,7 @@ export const data = {
     { name: "칸쵸", price: 1000, stock: 5 },
   ],
   money: [
-    { name: 10, count: 0 },
+    { name: 10, count: 1 },
     { name: 50, count: 1 },
     { name: 100, count: 5 },
     { name: 500, count: 5 },

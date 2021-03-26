@@ -9,7 +9,14 @@ export default class MachineModel extends Observable {
     this.totalInputMoneyArr = [];
     this.productState = data["product"];
     this.currentProduct;
+    this.timer;
   }
+
+  setTimer() {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.notify(this.vendingMoney), 5000);
+  }
+
   //루크----------
   returnTotalDetail() {
     let moneyTypeArr = [100000, 50000, 10000, 5000, 1000, 500, 100, 50, 10];
@@ -17,19 +24,19 @@ export default class MachineModel extends Observable {
       let idx = {};
       idx.name = moneyTypeArr[i];
       idx.count = Math.floor(this.totalInputMoney / moneyTypeArr[i]);
-
       this.totalInputMoneyArr.push(idx);
 
       this.totalInputMoney %= moneyTypeArr[i]; //total 35 -> 10만원-3 으로 넣어준다음 나머지를 현재돈이라 생각하고 5만원으로 넣어줌
     }
-    console.log("밖에서", this.totalInputMoneyArr);
+    // console.log("밖에서", this.totalInputMoneyArr);
+    //this.totalInputMoneyArr.filter(e => e.count > 0).map(e => e.name);
     return this.totalInputMoneyArr;
   }
 
   resetTotalMoney() {
     this.totalInputMoney = 0;
   }
-  //루크
+  //루크-----------
 
   getSelectableProduct() {
     const selectableProduct = [];
@@ -60,13 +67,18 @@ export default class MachineModel extends Observable {
   }
 
   setOverBudgetError() {
-    const state = { action: "overBudget", data: this.totalInputMoney };
+    const state = { action: "OVER-BUDGET", data: this.totalInputMoney };
     this.updateMachineState(state);
   }
 
   async updateSelectedProduct(product) {
-    const state = { action: "select", data: product };
+    const state = { action: "SELECT", data: product };
     await _.delay(2000);
+    this.updateMachineState(state);
+  }
+
+  updateReturnMoney() {
+    const state = { action: "RETURN", data: this.totalInputMoney };
     this.updateMachineState(state);
   }
 
@@ -76,8 +88,7 @@ export default class MachineModel extends Observable {
 
   addTotalMoney(moneyType) {
     this.totalInputMoney += moneyType;
-    const state = { action: "input", data: moneyType };
-
+    const state = { action: "INPUT", data: moneyType };
     this.updateMachineState(state);
   }
 

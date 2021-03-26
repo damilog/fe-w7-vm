@@ -41,6 +41,7 @@ export default class ProductView {
   }
 
   paintSelectable() {
+    console.log("실행됨");
     // 선택 가능한 품목 실시간 업데이트(색깔 입힘)
     const selectableProductList = this.model.getSelectableProduct();
     const $products = _.$All(".product-view__drink-bundle__list__name");
@@ -52,14 +53,6 @@ export default class ProductView {
           _.remove(x, "selectable");
         }
       }
-    });
-  }
-
-  paintUnselectable(product) {
-    const $products = _.$All(".product-view__drink-bundle__list__name");
-    $products.forEach(x => {
-      if (product.includes(x.innerText))
-        _.replace(x, "selectable", "unseletable");
     });
   }
 

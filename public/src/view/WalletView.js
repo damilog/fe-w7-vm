@@ -48,6 +48,7 @@ export default class WalletView {
   updateWallet(event) {
     if (event.target.className !== "wallet-view__cash-bundle__price") return;
     const clickedMoney = Number(event.target.value);
+    //5초 카운트 시작
     this.model.updateMoney(clickedMoney); //notify
   }
 
@@ -59,7 +60,12 @@ export default class WalletView {
   renderCurrentWallet(moneyList) {
     moneyList.forEach(clickedMoney => {
       const $clickedMoneyCount = _.$(`#cnt-${clickedMoney}`);
+      const $clickedMoneyName = _.$(`#money-${clickedMoney}`);
       const clickedMoneyCount = this.model.getMoneyCount(clickedMoney);
+      console.log(clickedMoneyCount);
+      if (clickedMoneyCount === 0) {
+        $clickedMoneyName.disabled = "disabled";
+      }
       $clickedMoneyCount.innerText = `${clickedMoneyCount}개`;
       this.renderTotalPrice();
     });

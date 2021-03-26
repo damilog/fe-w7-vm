@@ -40,19 +40,19 @@ export default class MonitorView {
   renderMonitor({ action, data }) {
     let text;
     switch (action) {
-      case "input":
+      case "INPUT":
         this.renderInputMoney();
         text = this.printInputMoney(data);
         break;
-      case "select":
+      case "SELECT":
         this.renderInputMoney();
         text = this.printSelectedProduct(data);
         break;
-      case "return":
+      case "RETURN":
         this.renderInputMoney();
         text = this.printReturnMoney(data);
         break;
-      case "overBudget":
+      case "OVER-BUDGET":
         this.renderInputMoney();
         text = this.printOverBudgetError(data);
         break;
@@ -77,8 +77,8 @@ export default class MonitorView {
     return `<div class= "monitor-view__monitor__text">${product}가 선택 됨 (재고 ${stock}개)</div>`;
   }
 
-  printReturnMoney(money) {
-    return `<div class= "monitor-view__monitor__text">잔돈 ${money}원 반환</div>`;
+  printReturnMoney(returnMoney) {
+    return `<div class= "monitor-view__monitor__text">잔돈 ${returnMoney}원 반환</div>`;
   }
 
   renderInitView() {
@@ -99,8 +99,9 @@ export default class MonitorView {
   }
 
   updateWallet() {
-    console.log(45);
-    this.walletModel.returnTotalMoney(this.model.returnTotalDetail());
+    this.model.updateReturnMoney();
+    //this.walletModel.returnTotalMoney(this.model.returnTotalDetail());
+    //this.walletModel.resetMoneyState();
     this.model.resetTotalMoney();
     this.renderInputMoney();
     this.disableReturnBtn();
