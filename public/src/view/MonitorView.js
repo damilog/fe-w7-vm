@@ -1,31 +1,32 @@
 import { _ } from "../util.js";
 
 export default class MonitorView {
-  constructor(model, productView, walletModel) {
+  constructor(model, walletModel) {
     this.model = model;
-    this.productView = productView;
     this.walletModel = walletModel;
-    this.disabled = "";
     this.renderInitView();
     this.init();
   }
 
   init() {
-    this.model.subscribe(this.renderMonitor.bind(this)); 
-    this.model.subscribe(
-      this.productView.paintSelectable.bind(this.productView)
-    );
-      this.ableReturnBtn();
+    this.walletModel.subscribe(money => this.updateInputEvent(money));
+    this.walletModel.subscribe(this.ableReturnBtn.bind(this));
+    this.model.subscribe(state => this.renderMonitor(state));
+    // this.onEvent();
+  }
+  updateWallet() {
+    this.walletModel.returnTotalMoney(this.model.returnTotalDetail());
+    this.model.resetTotalMoney();
+    this.renderInputMoney();
+    this.disableReturnBtn();
+
+  }
+  onEvent($returnBtn) {
+    $returnBtn.addEventListener("click", this.updateWallet.bind(this));
   }
 
-  updateInputEvent({state,money}) { //wallet에서 구독중
-    //상태를 받아서 그 상태가 return 이면 update는 안하게 
-    if(state === "input"){
-      this.model.updateTotalMoney(money); //notify
-      this.renderInputMoney();
-    }else if(state = "return"){
-      this.renderInputMoney();
-    }
+  updateInputEvent(money) {
+    this.model.addTotalMoney(money); //notify
   }
 
   renderInputMoney() {
@@ -35,48 +36,35 @@ export default class MonitorView {
   }
 
   disableReturnBtn() {
-    console.log('aa')
     const $returnBtn = _.$(".monitor-view__btn");
-    this.disabled = "true";
     $returnBtn.disabled = "disabled";
-    // this.isDisable($returnBtn);
-  }
-
-  isDisable() {
-    return this.disabled;
+    // this.onEvent($returnBtn)
   }
 
   ableReturnBtn() {
     const $returnBtn = _.$(".monitor-view__btn");
     $returnBtn.disabled = false;
-    this.onEvent($returnBtn);
-  }
-
-  updateWallet() {
-    // const totalInputMoney = this.model.getTotalInputMoney();
-    // // console.log(totalInputMoney)
-    this.walletModel.returnTotalMoney(this.model.returnTotalDetail());
-    this.model.resetTotalMoney();
-    this.renderInputMoney();
-    this.disableReturnBtn();
-
-  }
-
-  onEvent($returnBtn) {
-    $returnBtn.addEventListener("click", this.updateWallet.bind(this));
+    this.onEvent($returnBtn)
   }
 
   renderMonitor({ action, data }) {
     let text;
     switch (action) {
       case "input":
+        this.renderInputMoney();
         text = this.printInputMoney(data);
         break;
       case "select":
-        text = this.printSelectedMoney(data);
+        this.renderInputMoney();
+        text = this.printSelectedProduct(data);
         break;
       case "return":
+        this.renderInputMoney();
         text = this.printReturnMoney(data);
+        break;
+      case "overBudget":
+        this.renderInputMoney();
+        text = this.printOverBudgetError(data);
         break;
       default:
         console.log(Error(`${action}은 처리 불가합니다.`));
@@ -86,12 +74,17 @@ export default class MonitorView {
     _.insert($monitor, "beforeend", text);
   }
 
+  printOverBudgetError(money) {
+    return `<div class= "monitor-view__monitor__text">현재 투입 금액(${money})로 구매 불가</div>`;
+  }
+
   printInputMoney(money) {
-    return `<div class= "monitor-view__monitor__text">${money}원이 투입됐음.</div>`;
+    return `<div class= "monitor-view__monitor__text">${money}원이 투입 됨</div>`;
   }
 
   printSelectedProduct(product) {
-    return `<div class= "monitor-view__monitor__text">${product}가 선택 됨.</div>`;
+    const stock = this.model.getProductStock(product);
+    return `<div class= "monitor-view__monitor__text">${product}가 선택 됨 (재고 ${stock}개)</div>`;
   }
 
   printReturnMoney(money) {

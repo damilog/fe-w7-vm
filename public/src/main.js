@@ -1,6 +1,5 @@
-
 import "../sass/main.scss";
-import { _, delay } from "./util.js";
+import { _ } from "./util.js";
 import WalletModel from "./model/WalletModel.js";
 import MachineModel from "./model/MachineModel.js";
 
@@ -12,5 +11,5 @@ const walletModel = new WalletModel();
 const machineModel = new MachineModel();
 
 const productView = new ProductView(machineModel);
-const monitorView = new MonitorView(machineModel, productView, walletModel);
-const walletView = new WalletView(walletModel, monitorView);
+const monitorView = new MonitorView(machineModel, walletModel);
+const walletView = new WalletView(walletModel, machineModel);
