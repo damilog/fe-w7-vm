@@ -44,10 +44,11 @@ export default class WalletView {
       );
     }, "");
   }
+
   updateWallet(event) {
     if (event.target.className !== "wallet-view__cash-bundle__price") return;
     const clickedMoney = Number(event.target.value);
-    this.model.updateMoney(clickedMoney);
+    this.model.updateMoney(clickedMoney); //notify
   }
 
   renderTotalPrice() {
@@ -55,10 +56,12 @@ export default class WalletView {
     cashTotalPrice.innerText = this.model.calculateTotalMoney();
   }
 
-  renderCurrentWallet(clickedMoney) {
-    const $clickedMoneyCount = _.$(`#cnt-${clickedMoney}`);
-    const clickedMoneyCount = this.model.getMoneyCount(clickedMoney);
-    $clickedMoneyCount.innerText = `${clickedMoneyCount}개`;
-    this.renderTotalPrice();
+  renderCurrentWallet(moneyList) {
+    moneyList.forEach(clickedMoney => {
+      const $clickedMoneyCount = _.$(`#cnt-${clickedMoney}`);
+      const clickedMoneyCount = this.model.getMoneyCount(clickedMoney);
+      $clickedMoneyCount.innerText = `${clickedMoneyCount}개`;
+      this.renderTotalPrice();
+    });
   }
 }

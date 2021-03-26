@@ -19,9 +19,10 @@ export default class MachineModel extends Observable {
       idx.count = Math.floor(this.totalInputMoney / moneyTypeArr[i]);
 
       this.totalInputMoneyArr.push(idx);
+
       this.totalInputMoney %= moneyTypeArr[i]; //total 35 -> 10만원-3 으로 넣어준다음 나머지를 현재돈이라 생각하고 5만원으로 넣어줌
     }
-    console.log(this.totalInputMoneyArr);
+    console.log("밖에서", this.totalInputMoneyArr);
     return this.totalInputMoneyArr;
   }
 

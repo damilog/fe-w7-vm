@@ -13,7 +13,14 @@ export default class WalletModel extends Observable {
     this.moneyState.forEach(money => {
       if (money["name"] === moneyType && money["count"]) money["count"]--;
     });
-    this.notify(moneyType);
+
+    this.notify([moneyType]);
+  }
+
+  returnMoney() {
+    //반환 버튼 눌렀을 때 이걸 실행시켜준다.
+    //moneyType = [500, 1000] -> 루크가 반환한 돈 type
+    this.notify([...moneyType]);
   }
 
   getMoneyState() {
@@ -41,6 +48,5 @@ export default class WalletModel extends Observable {
 
   returnTotalMoney(total) {
     this.totalMoneyDetail = total;
-    console.log(this.totalMoneyDetail);
   }
 }
