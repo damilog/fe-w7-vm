@@ -12,6 +12,7 @@ export default class MonitorView {
     this.walletModel.subscribe(money => this.updateInputEvent(money));
     this.walletModel.subscribe(this.ableReturnBtn.bind(this));
     this.model.subscribe(state => this.renderMonitor(state));
+    this.disableReturnBtn();
   }
 
   updateInputEvent(money) {
@@ -26,12 +27,13 @@ export default class MonitorView {
 
   disableReturnBtn() {
     const $returnBtn = _.$(".monitor-view__btn");
-    $returnBtn.disabled = true;
+    $returnBtn.disabled = "disabled";
   }
 
   ableReturnBtn() {
     const $returnBtn = _.$(".monitor-view__btn");
     $returnBtn.disabled = false;
+    this.onEvent($returnBtn);
   }
 
   renderMonitor({ action, data }) {
@@ -89,5 +91,20 @@ export default class MonitorView {
     />
     <div class="monitor-view__monitor"></div>`;
     $monitorContainer.innerHTML = template;
+  }
+
+  isDisable() {
+    return this.disabled;
+  }
+
+  updateWallet() {
+    this.walletModel.returnTotalMoney(this.model.returnTotalDetail());
+    this.model.resetTotalMoney();
+    this.renderInputMoney();
+    this.disableReturnBtn();
+  }
+
+  onEvent($returnBtn) {
+    $returnBtn.addEventListener("click", this.updateWallet.bind(this));
   }
 }

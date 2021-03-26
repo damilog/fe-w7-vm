@@ -6,6 +6,7 @@ export default class WalletModel extends Observable {
   constructor() {
     super();
     this.moneyState = data["money"];
+    this.totalMoneyDetail = []; //luke
   }
 
   updateMoney(moneyType) {
@@ -34,5 +35,12 @@ export default class WalletModel extends Observable {
     return this.moneyState.reduce((acc, money) => {
       return acc + money["name"] * money["count"];
     }, 0);
+  }
+
+  //luke
+
+  returnTotalMoney(total) {
+    this.totalMoneyDetail = total;
+    console.log(this.totalMoneyDetail);
   }
 }
